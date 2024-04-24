@@ -55,8 +55,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         rgb.save("start.png").unwrap();
         drop(slicea);
         rand_buffer.unmap();
+        let now = std::time::Instant::now();
         let rand_buffer =
             deterministic_ball_sim::MergeSort::new(&device).sort(rand_buffer, &device, &queue);
+        println!("{}", now.elapsed().as_micros());
         let (tx, rx) = futures_intrusive::channel::shared::oneshot_channel();
         rand_buffer
             .slice(..)
